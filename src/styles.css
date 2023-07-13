@@ -1,0 +1,56 @@
+body {
+  padding: 2rem 6rem;
+}
+.custom-calendar {
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.month-year {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 0fr);
+  /* gap: 5px; */
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 116px;
+  width: 155px;
+  background-color: white;
+  border-radius: 5px;
+
+  border: 2px solid var(--soft-whisper, #aeaeae);
+  padding: 8px;
+}
+
+.calendar-day.empty {
+  background: var(--frosty-ivory, #f0f0f0);
+
+  color: gray;
+}
+
+.date {
+  font-size: 16px;
+}
