@@ -2,6 +2,32 @@ import React, { useState } from "react";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const today = new Date();
+  const todayFormatted = today.toISOString().slice(0, 10);
+
+  // Dummy event data
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      date: "2023-08-24",
+      event: "Event 1",
+    },
+    {
+      id: 2,
+      date: "2023-07-14",
+      event: "Event 2",
+    },
+    {
+      id: 3,
+      date: "2024-01-30",
+      event: "Event 3",
+    },
+    {
+      id: 4,
+      date: "2023-05-14",
+      event: "Event 4",
+    },
+  ]);
 
   const goToPreviousMonth = () => {
     setCurrentDate((prevDate) => {
@@ -47,11 +73,29 @@ const Calendar = () => {
 
     // Add date cards for each day of the month
     for (let i = 1; i <= numDays; i++) {
+      const date = new Date(year, month, i + 1);
+      const formattedDate = date.toISOString().slice(0, 10);
+
+      const cellDate = new Date(year, month, i);
+      const formattedCellDate = cellDate.toISOString().slice(0, 10);
+
+      const dateEvents = events.filter((event) => event.date === formattedDate);
+
+      const isToday = todayFormatted === formattedCellDate;
+
+      console.log("isToday: ", todayFormatted);
+
       calendarDays.push(
         <div key={i} className="calendar-day">
-          <div className="date">{i}</div>
-          {/* Customize date card with additional labels or data */}
-          {/* Add your custom components or data here */}
+          <div className={`date ${isToday && "active"}`}>
+            <span>{i}</span>
+          </div>
+          {/* Display events for the day */}
+          {dateEvents.map((event) => (
+            <div key={event.id} className="event">
+              <span> {event.event}</span>
+            </div>
+          ))}
         </div>
       );
     }
@@ -75,10 +119,15 @@ const Calendar = () => {
       <div className="calendar-header">
         <button onClick={goToPreviousMonth}>&lt;</button>
         <div className="month-year">
-          {currentDate.toLocaleString("default", {
-            month: "long",
-            year: "numeric",
-          })}
+          {currentDate
+            .toLocaleString("default", {
+              month: "long",
+              year: "numeric",
+            })
+            .split(" ")
+            .map((item) => (
+              <span>{item}</span>
+            ))}
         </div>
         <button onClick={goToNextMonth}>&gt;</button>
       </div>
